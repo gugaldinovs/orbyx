@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbyx — Ecossistema de Posicionamento Digital</title>
+<meta name="description" content="Orbyx organiza a presença digital de negócios estabelecidos com dados reais, criativos que convertem e gestão de tráfego sob controle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-soft:#f4f7fc;
+    --bg-soft-2:#eaf0fc;
+    --navy-950:#070c1c;
+    --navy-800:#141f3d;
+    --blue-600:#1d54d6;
+    --blue-500:#2e6ff2;
+    --blue-400:#5b8bff;
+    --blue-100:#e7edff;
+    --slate-500:#5b6478;
+    --slate-300:#a3adc2;
+    --border:rgba(10,17,40,0.09);
+    --shadow-color:rgba(20,40,100,0.16);
+
+    --font-display:'Montserrat', sans-serif;
+    --font-body:'Montserrat', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--navy-950);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- BACKGROUND: smoke + glass parallax ---------- */
+  .bg-layer{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .parallax-item{ position:absolute; inset:0; will-change:transform; }
+
+  .smoke{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+  }
+  .smoke-1{ width:560px; height:560px; top:-160px; left:-160px; background:radial-gradient(circle, rgba(46,111,242,0.16), transparent 70%); animation:drift1 24s ease-in-out infinite; }
+  .smoke-2{ width:620px; height:620px; top:50%; right:-220px; background:radial-gradient(circle, rgba(91,139,255,0.14), transparent 70%); animation:drift2 30s ease-in-out infinite; }
+  .smoke-3{ width:420px; height:420px; top:18%; right:6%; background:radial-gradient(circle, rgba(46,111,242,0.09), transparent 70%); animation:drift2 20s ease-in-out infinite; }
+  .smoke-4{ width:460px; height:460px; bottom:4%; left:4%; background:radial-gradient(circle, rgba(91,139,255,0.10), transparent 70%); animation:drift1 26s ease-in-out infinite; }
+  @keyframes drift1{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(50px,60px);} }
+  @keyframes drift2{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(-55px,-45px);} }
+
+  .glass{ position:absolute; }
+
+  .glass-torus{
+    width:170px; height:170px;
+    top:15%; right:9%;
+    border-radius:50%;
+    background:conic-gradient(from 210deg, #eef3ff, #7ba4ff 22%, #2e6ff2 45%, #0a1550 62%, #2e6ff2 78%, #eef3ff 100%);
+    -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 30px), #000 calc(100% - 30px));
+    mask:radial-gradient(farthest-side, transparent calc(100% - 30px), #000 calc(100% - 30px));
+    filter:drop-shadow(0 30px 34px rgba(46,111,242,0.30));
+    animation:floatY 11s ease-in-out infinite;
+  }
+  .glass-card{
+    width:150px; height:190px;
+    bottom:14%; left:6%;
+    border-radius:24px;
+    background:linear-gradient(155deg, rgba(255,255,255,0.85), rgba(219,231,255,0.55));
+    border:1px solid rgba(255,255,255,0.9);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      0 35px 50px -22px rgba(46,111,242,0.35);
+    backdrop-filter:blur(6px);
+    transform:rotate(-16deg);
+    animation:floatY 14s ease-in-out infinite reverse;
+  }
+  .glass-tri{
+    width:0; height:0;
+    top:60%; right:20%;
+    border-left:56px solid transparent;
+    border-right:56px solid transparent;
+    border-bottom:98px solid rgba(91,139,255,0.28);
+    filter:drop-shadow(0 22px 24px rgba(46,111,242,0.25));
+    animation:floatY 16s ease-in-out infinite;
+  }
+  @keyframes floatY{ 0%,100%{transform:translateY(0) rotate(var(--r,0deg));} 50%{transform:translateY(-24px) rotate(var(--r,0deg));} }
+  .glass-card{ --r:-16deg; }
+
+  @media (max-width:820px){
+    .glass-torus,.glass-card,.glass-tri,.smoke-3{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .smoke,.glass,.atom-float,.atom-spin{ animation:none !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(255,255,255,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1180px; margin:0 auto; }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:21px; letter-spacing:0.2px; color:var(--navy-950); }
+  .logo img{ height:26px; width:auto; display:block; }
+  .nav-links{ display:flex; gap:36px; font-size:14px; color:var(--slate-500); }
+  .nav-links a:hover{ color:var(--navy-950); }
+  .nav-cta{ background:var(--blue-500); color:#fff; padding:10px 20px; border-radius:6px; font-size:14px; font-weight:600; transition:background 0.2s ease, transform 0.2s ease; }
+  .nav-cta:hover{ background:var(--blue-600); transform:translateY(-1px); }
+  @media (max-width:820px){ .nav-links{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{ position:relative; min-height:100vh; display:flex; align-items:center; padding-top:120px; padding-bottom:80px; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center; position:relative; z-index:2; }
+  .eyebrow{ font-family:var(--font-mono); font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--blue-500); display:flex; align-items:center; gap:10px; margin-bottom:22px; }
+  .eyebrow::before{ content:''; width:24px; height:1px; background:var(--blue-500); }
+  h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(36px, 5vw, 58px); line-height:1.08; letter-spacing:-0.5px; margin-bottom:24px; color:var(--navy-950); }
+  h1 .accent{ color:var(--blue-500); }
+  .hero p.lead{ font-size:17px; color:var(--slate-500); max-width:480px; margin-bottom:36px; }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn-primary{ background:var(--blue-500); color:#fff; padding:15px 28px; border-radius:6px; font-weight:600; font-size:15px; display:inline-block; transition:transform 0.2s ease, background 0.2s ease; box-shadow:0 14px 26px -10px rgba(46,111,242,0.45); }
+  .btn-primary:hover{ background:var(--blue-600); transform:translateY(-2px); }
+  .btn-ghost{ border:1.5px solid var(--border); color:var(--navy-950); padding:15px 28px; border-radius:6px; font-weight:600; font-size:15px; transition:border-color 0.2s ease, background 0.2s ease; }
+  .btn-ghost:hover{ border-color:var(--blue-400); background:var(--blue-100); }
+
+  /* Hero logo visual */
+  .atom-stage{ position:relative; width:100%; max-width:400px; margin:0 auto; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; }
+  .atom-shadow{
+    position:absolute; bottom:6%; left:50%; transform:translateX(-50%);
+    width:60%; height:14%;
+    background:radial-gradient(ellipse, rgba(46,111,242,0.35), transparent 72%);
+    filter:blur(6px);
+  }
+  .atom-float{ animation:atomBob 6s ease-in-out infinite; position:relative; z-index:2; width:78%; }
+  .atom-spin{ display:block; width:100%; height:auto; animation:atomSpin 42s linear infinite; filter:drop-shadow(0 24px 30px rgba(46,111,242,0.28)); }
+  @keyframes atomBob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+  @keyframes atomSpin{ to{ transform:rotate(360deg); } }
+
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; text-align:left; }
+    .atom-stage{ max-width:260px; margin-top:10px; }
+  }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding:110px 0; }
+  .section-head{ max-width:640px; margin-bottom:60px; }
+  .section-head .eyebrow{ margin-bottom:14px; }
+  h2{ font-family:var(--font-display); font-weight:800; font-size:clamp(28px, 3.4vw, 40px); line-height:1.15; letter-spacing:-0.4px; margin-bottom:16px; color:var(--navy-950); }
+  h2 .accent{ color:var(--blue-500); }
+  .section-head p{ color:var(--slate-500); font-size:16px; }
+
+  /* ---------- POSITIONING ---------- */
+  .positioning{ background:var(--bg-soft); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .positioning-grid{ display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start; }
+  .positioning-grid h2{ max-width:460px; }
+  .positioning-list{ display:flex; flex-direction:column; gap:22px; }
+  .positioning-item{ display:flex; gap:16px; padding-bottom:22px; border-bottom:1px solid var(--border); }
+  .positioning-item:last-child{ border-bottom:none; }
+  .positioning-item .mark{ font-family:var(--font-mono); color:var(--blue-500); font-size:13px; padding-top:3px; }
+  .positioning-item strong{ display:block; margin-bottom:4px; font-size:15.5px; color:var(--navy-950); }
+  .positioning-item span{ color:var(--slate-500); font-size:14.5px; }
+  @media (max-width:900px){ .positioning-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden;
+  }
+  .service-card{ background:var(--bg); padding:36px 30px; position:relative; transition:background 0.25s ease, transform 0.25s ease; }
+  .service-card:hover{ background:var(--bg-soft); }
+  .service-card .node-icon{ width:34px; height:34px; border-radius:50%; border:1.5px solid var(--blue-500); position:relative; margin-bottom:22px; }
+  .service-card .node-icon::after{ content:''; position:absolute; top:50%; left:50%; width:8px; height:8px; border-radius:50%; background:var(--blue-500); transform:translate(-50%,-50%); }
+  .service-card h3{ font-family:var(--font-display); font-size:18px; font-weight:700; margin-bottom:10px; color:var(--navy-950); }
+  .service-card p{ color:var(--slate-500); font-size:14.5px; }
+  @media (max-width:900px){ .services-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- CTA / FORM ---------- */
+  .cta-section{ background:var(--bg-soft); border-top:1px solid var(--border); }
+  .cta-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .cta-grid h2{ margin-bottom:18px; }
+  .cta-grid p{ color:var(--slate-500); font-size:16px; max-width:440px; }
+  .cta-stats{ display:flex; gap:36px; margin-top:34px; }
+  .cta-stats div strong{ display:block; font-family:var(--font-display); font-size:26px; color:var(--navy-950); }
+  .cta-stats div span{ font-size:13px; color:var(--slate-500); }
+
+  form{
+    background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:36px;
+    box-shadow:0 30px 60px -30px var(--shadow-color);
+  }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-size:13px; color:var(--slate-500); margin-bottom:8px; font-family:var(--font-mono); }
+  .field input{
+    width:100%; background:var(--bg-soft); border:1px solid var(--border); border-radius:6px;
+    padding:14px 16px; color:var(--navy-950); font-family:var(--font-body); font-size:15px; outline:none;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .field input:focus{ border-color:var(--blue-400); background:#fff; }
+  .field input::placeholder{ color:var(--slate-300); }
+  form button{
+    width:100%; background:var(--blue-500); color:#fff; border:none; padding:16px; border-radius:6px;
+    font-weight:700; font-size:15px; cursor:pointer; font-family:var(--font-body);
+    transition:background 0.2s ease; box-shadow:0 14px 26px -10px rgba(46,111,242,0.45);
+  }
+  form button:hover{ background:var(--blue-600); }
+  .form-note{ font-size:12.5px; color:var(--slate-300); margin-top:14px; text-align:center; }
+  .form-success{ display:none; text-align:center; padding:20px 0; }
+  .form-success.show{ display:block; }
+  .form-success .node-icon{ margin:0 auto 18px; }
+  @media (max-width:900px){ .cta-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:40px 0; border-top:1px solid var(--border); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  footer .logo{ font-size:16px; }
+  footer .logo img{ height:22px; }
+  footer p{ color:var(--slate-300); font-size:13px; }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  :focus-visible{ outline:2px solid var(--blue-400); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden="true">
+  <div class="parallax-item" data-speed="0.06"><div class="smoke smoke-1"></div></div>
+  <div class="parallax-item" data-speed="0.10"><div class="smoke smoke-2"></div></div>
+  <div class="parallax-item" data-speed="0.05"><div class="smoke smoke-3"></div></div>
+  <div class="parallax-item" data-speed="0.08"><div class="smoke smoke-4"></div></div>
+  <div class="parallax-item" data-speed="0.14"><div class="glass glass-torus"></div></div>
+  <div class="parallax-item" data-speed="0.09"><div class="glass glass-card"></div></div>
+  <div class="parallax-item" data-speed="0.18"><div class="glass glass-tri"></div></div>
+</div>
+
+<header>
+  <nav>
+    <div class="logo">
+      <img src="orbyx-icon-flat.png" alt="Orbyx">
+      ORBYX
+    </div>
+    <div class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#ecossistema">Como funciona</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <a href="#contato" class="nav-cta">Falar com a Orbyx</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Ecossistema de posicionamento digital</div>
+      <h1>Sua empresa já é referência na cidade.<br>É hora do digital <span class="accent">provar isso.</span></h1>
+      <p class="lead">A Orbyx organiza presença, dados e criativos do seu negócio em um único sistema — sem promessa vaga, sem relatório genérico. Só o que gera resultado, medido de verdade.</p>
+      <div class="hero-actions">
+        <a href="#contato" class="btn-primary">Quero organizar meu digital</a>
+        <a href="#ecossistema" class="btn-ghost">Ver como funciona</a>
+      </div>
+    </div>
+    <div class="atom-stage" aria-hidden="true">
+      <div class="atom-shadow"></div>
+      <div class="atom-float">
+        <img class="atom-spin" src="orbyx-icon.png" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="positioning" id="ecossistema">
+  <div class="wrap positioning-grid">
+    <div class="reveal">
+      <div class="eyebrow">Posicionamento</div>
+      <h2>Isso não é uma agência.<br>É o <span class="accent">sistema</span> que organiza o seu negócio no digital.</h2>
+      <p style="color:var(--slate-500); font-size:15.5px; max-width:440px;">O mercado de agências vende pacote fechado e relatório bonito. A Orbyx entrega visibilidade real: cada peça do seu digital conectada, medida e ajustada com base no que realmente converte.</p>
+    </div>
+    <div class="positioning-list reveal">
+      <div class="positioning-item">
+        <div class="mark">01</div>
+        <div><strong>Dados reais, não vaidade</strong><span>Você acompanha o que importa: custo por resultado, não curtidas.</span></div>
+      </div>
+      <div class="positioning-item">
+        <div class="mark">02</div>
+        <div><strong>Um sistema, não fornecedores soltos</strong><span>Site, criativos e tráfego conversando entre si, com um único responsável.</span></div>
+      </div>
+      <div class="positioning-item">
+        <div class="mark">03</div>
+        <div><strong>Sob medida para o seu porte</strong><span>Plano dimensionado para o tamanho real da sua operação — sem pacote genérico.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">O que compõe o ecossistema</div>
+      <h2>Cada parte do seu digital, sob controle.</h2>
+      <p>Seis frentes que trabalham juntas — não como serviços avulsos, mas como um sistema único de posicionamento.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="node-icon"></div>
+        <h3>Organização digital</h3>
+        <p>Presença estruturada: site, redes e canais funcionando como um único ponto de entrada para o cliente.</p>
+      </div>
+      <div class="service-card">
+        <div class="node-icon"></div>
+        <h3>Visibilidade de dados</h3>
+        <p>Resultado acompanhado em números reais — sem achismo, sem relatório decorativo.</p>
+      </div>
+      <div class="service-card">
+        <div class="node-icon"></div>
+        <h3>Criativos que convertem</h3>
+        <p>Imagens e motion pensados para gerar ação, não só engajamento.</p>
+      </div>
+      <div class="service-card">
+        <div class="node-icon"></div>
+        <h3>Gestão de tráfego</h3>
+        <p>Campanhas ajustadas com base em performance, não em intuição.</p>
+      </div>
+      <div class="service-card">
+        <div class="node-icon"></div>
+        <h3>Controle de gastos em mídia</h3>
+        <p>Cada real investido rastreado até o resultado que ele gerou.</p>
+      </div>
+      <div class="service-card">
+        <div class="node-icon"></div>
+        <h3>Plano sob medida</h3>
+        <p>Estrutura dimensionada para o tamanho e o momento real da sua empresa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contato">
+  <div class="wrap cta-grid">
+    <div class="reveal">
+      <div class="eyebrow">Próximo passo</div>
+      <h2>Fale com a Orbyx e veja onde seu digital está deixando resultado na mesa.</h2>
+      <p>Preencha os dados abaixo. Nosso time comercial entra em contato pelo WhatsApp para entender seu negócio e montar um plano sob medida.</p>
+      <div class="cta-stats">
+        <div><strong>1</strong><span>sistema, não vários fornecedores</span></div>
+        <div><strong>100%</strong><span>decisão baseada em dados</span></div>
+      </div>
+    </div>
+
+    <form id="orbyx-form" class="reveal" action="https://formsubmit.co/SEU-EMAIL@orbyx.com" method="POST">
+      <input type="hidden" name="_subject" value="Novo contato — site Orbyx">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <div id="form-fields">
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="Nome" placeholder="Seu nome" required>
+        </div>
+        <div class="field">
+          <label for="empresa">Empresa</label>
+          <input type="text" id="empresa" name="Empresa" placeholder="Nome da empresa" required>
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" name="WhatsApp" placeholder="(00) 00000-0000" required>
+        </div>
+        <button type="submit">Quero falar com a Orbyx</button>
+        <p class="form-note">Seus dados vão direto para o time comercial por e-mail. Nada é armazenado em planilha ou banco de dados.</p>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <div class="node-icon"></div>
+        <h3 style="font-family:var(--font-display); font-size:18px; margin-bottom:8px; color:var(--navy-950);">Recebemos seu contato.</h3>
+        <p style="color:var(--slate-500); font-size:14.5px;">Nosso time vai te chamar no WhatsApp em breve.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="logo">
+      <img src="orbyx-icon-flat.png" alt="Orbyx">
+      ORBYX
+    </div>
+    <p>© 2026 Orbyx. Ecossistema de posicionamento digital.</p>
+  </div>
+</footer>
+
+<script>
+  // Parallax background (smoke + glass shapes move with scroll)
+  const parallaxEls = document.querySelectorAll('.bg-layer [data-speed]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ticking = false;
+  function updateParallax(){
+    const y = window.scrollY;
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.dataset.speed) || 0.1;
+      el.style.transform = `translateY(${y * speed}px)`;
+    });
+    ticking = false;
+  }
+  if (!reduceMotion) {
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive: true });
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Form submit -> success state
+  const form = document.getElementById('orbyx-form');
+  const fields = document.getElementById('form-fields');
+  const success = document.getElementById('form-success');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+    } catch (err) {}
+    fields.style.display = 'none';
+    success.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
